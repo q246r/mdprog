@@ -1,0 +1,41 @@
+# Pd parameter
+# Job selector
+1
+# Lattice, nx
+10
+# Lattice, ny
+10
+# Lattice, nz
+10
+# Number of Interstitials
+0
+# Number of atom type
+1
+# MD box, mx
+0
+# MD box, my
+0
+# MD box, mz
+0
+# Number of Substitutionals
+0
+# Lattice constant
+3.885
+# Cut-off distance
+5.35
+# Dumy 3
+0.0
+# Dumy 4
+0.0
+# Dumy 5
+0.0
+# Dumy 6
+0.0
+# Dumy 7
+0.0
+# Dumy 8
+0.0
+# Dumy 9
+0.0
+# Dumy 10
+0.0
