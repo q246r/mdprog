@@ -6,3 +6,4 @@ log.lammps
 a.out
 *.mod
 *.atsk
+test/
