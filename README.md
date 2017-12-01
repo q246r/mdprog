@@ -1,3 +1,3 @@
-test
-test2
-test3
+Program for molecular dynamics simulation
+
+You need to prepare atomsk, LAMMPS, and ovito.
