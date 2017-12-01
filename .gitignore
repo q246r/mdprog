@@ -7,3 +7,4 @@ a.out
 *.mod
 *.atsk
 test/
+run.*
