@@ -1,0 +1,50 @@
+# NVE, NVT and NPT ensamble
+
+units		metal
+boundary	p p p
+atom_style	atomic
+
+# Time steps
+# Total time steps
+variable	Ntot equal 100000
+# Dump file interval
+variable	N1 equal ${Ntot}/10
+#variable	N1 equal 10
+# Thermo Info interval
+variable	N3 equal ${Ntot}/100
+#variable	N3 equal 1000
+# Prescribed temperature (K)
+variable	Tset equal 300.0
+# Prescribed pressure (bars)
+variable	Pset equal 0.0
+# For example, 5 GPa
+#variable	Pset equal 50000.0
+
+read_data	data.file
+#read_restart	restart.data
+#reset_timestep	0
+
+# Setup potential
+include		potset1.mod
+
+velocity	all create ${Tset} 376847 loop geom
+
+# Choose ensemble
+# NEV ensemble
+#fix		1 all nve
+# NVT ensemble
+#fix		1 all nvt temp ${Tset} ${Tset} 0.1
+# NPT ensemble
+fix		1 all npt temp ${Tset} ${Tset} 0.1 iso ${Pset} ${Pset} 1
+# If dt = 0.1 fs
+#fix		1 all npt temp ${Tset} ${Tset} 0.01 iso ${Pset} ${Pset} 0.1
+
+include		analysis1.mod
+
+thermo		${N3}
+thermo_style	custom step temp press vol pe
+
+dump		2 all atom ${N1} dump.*.atom
+
+run		${Ntot}
+write_restart	restart.data
