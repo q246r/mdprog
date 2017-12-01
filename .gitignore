@@ -4,7 +4,6 @@ data.file
 log.lammps
 *.dat
 a.out
-*.mod
 *.atsk
 test/
 run.*
