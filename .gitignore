@@ -5,3 +5,4 @@ log.lammps
 *.dat
 a.out
 *.mod
+*.atsk
