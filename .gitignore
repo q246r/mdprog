@@ -10,3 +10,4 @@ run.*
 *.d
 dump.*
 restart.data
+res0
