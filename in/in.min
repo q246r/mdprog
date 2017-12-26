@@ -5,8 +5,8 @@ units		metal
 boundary	p p p
 atom_style	atomic
 
-#read_data	data.file
-read_restart	restart.data
+read_data	data.file
+#read_restart	restart.data
 #reset_timestep	0
 
 include		potset1.mod
