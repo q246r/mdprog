@@ -54,7 +54,7 @@ c
       idis=1
 
 c --- Select calculation
-      ical=7
+      ical=3
       if(ical.eq.0) write(6,*) '0: time average is selected.'
       if(ical.eq.1) write(6,*) '1: msd is selected.'
       if(ical.eq.2) write(6,*) '2: diffusivity is selected.'
@@ -78,6 +78,7 @@ c --- Select calculation
       if(ical.eq.19) write(6,*) '19: Slice a system is selected.'
       if(ical.eq.20) write(6,*) '20: unloading curve curve is selected.'
       if(ical.eq.21) write(6,*) '21: VRH average is selected.'
+      if(ical.eq.21) write(6,*) '22: Hydrogen marker is selected.'
       if(ical.eq.0) call timeave
       if(ical.eq.1) call msdcalc
       if(ical.eq.2) call difcalc
@@ -98,6 +99,7 @@ c --- Select calculation
       if(ical.eq.19) call slice
       if(ical.eq.20) call unload
       if(ical.eq.21) call vrhave
+      if(ical.eq.22) call hmarker
 
       end
 c
@@ -834,7 +836,8 @@ c      dd0=6.87e-7
 
       di0=dd0*exp(-ea0/tt/akb) 
       write(6,*) 'Ea, D0 =', ea0,dd0
-      write(6,*) 'T (K), D (m^2/s) =',tt,di0
+      write(6,*) 'T (K), 1000/T, D (m^2/s) ='
+      write(6,*) tt,1000.0d0/tt,di0
 
       write(6,*) 'Complete Arrhenius plot.'
 
@@ -880,6 +883,48 @@ c
       end
 c
       subroutine dump
+      use variables
+      use parameters
+      implicit doubleprecision (a-h,o-z)
+      doubleprecision,dimension(:),allocatable :: a,b,c
+      integer,dimension(:),allocatable :: ia
+
+c --- Read LAMMPS dump file
+      call readdump
+      if(idis.eq.1) write(6,*) 'readdump has been finished.'
+c      nty=2
+
+      allocate(a(n),b(n),c(n),ia(n))
+
+      m=0
+      do i=1,n
+       if(is(i).eq.1) then
+        m=m+1
+        a(m)=x(i)
+        b(m)=y(i)
+        c(m)=z(i)
+        ia(m)=is(i)
+       endif
+      enddo
+
+      do i=1,m
+       x(i)=a(i)
+       y(i)=b(i)
+       z(i)=c(i)
+       is(i)=ia(i)
+      enddo
+
+      n=m
+      if(idis.eq.1) write(6,*) 'n =',n
+      nty=1
+
+c --- Write LAMMPS data file
+      call writedata
+      if(idis.eq.1) write(6,*) 'writedata has been finished.'
+
+      end
+c
+      subroutine hmarker
       use variables
       use parameters
       implicit doubleprecision (a-h,o-z)
