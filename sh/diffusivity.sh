@@ -28,5 +28,5 @@ grep 'Dx:' data* | awk '{print $3*1.0e10}' > Dx
 grep 'Dy:' data* | awk '{print $3*1.0e10}' > Dy
 grep 'Dz:' data* | awk '{print $3*1.0e10}' > Dz
 
-paste Dd Dx Dy Dz > result
+paste -d " " Dd Dx Dy Dz > result
 rm data* D?
