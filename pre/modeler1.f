@@ -907,15 +907,27 @@ c --- Periodic boundary condition
       dy=0.0d0
       dz=0.0d0
       xmin=0.0d0+dx
-      xmax=mx*a+dx
+      xmax=nx*a+dx
       ymin=0.0d0+dy
-      ymax=my*a*r3+dy
+      ymax=ny*a*r3*0.5d0+dy
       zmin=0.0d0+dz
-      zmax=mz*c+dz
+      zmax=nz*c+dz
+      xlen=xmax-xmin
+      ylen=ymax-ymin
+      zlen=zmax-zmin
+
+      do i=1,n
+       if(x(i).gt.xmax) x(i)=x(i)-xlen
+       if(x(i).lt.xmin) x(i)=x(i)+xlen
+       if(y(i).gt.ymax) y(i)=y(i)-ylen
+       if(y(i).lt.ymin) y(i)=y(i)+ylen
+       if(z(i).gt.zmax) z(i)=z(i)-zlen
+       if(z(i).lt.zmin) z(i)=z(i)+zlen
+      enddo
 
 c --- Cut out MD box 
-      call cutbox
-      if(idis.eq.1) write(6,*) 'cutbox has been finished.'
+c      call cutbox
+c      if(idis.eq.1) write(6,*) 'cutbox has been finished.'
 
 c --- Check
 c      write(6,*) 'xmin,xmax:',xmin,xmax
@@ -1282,15 +1294,27 @@ c --- Periodic boundary condition
       dy=0.0d0
       dz=0.0d0
       xmin=0.0d0+dx
-      xmax=mx*a+dx
+      xmax=nx*a+dx
       ymin=0.0d0+dy
-      ymax=my*a*r3+dy
+      ymax=ny*a*r3*0.5d0+dy
       zmin=0.0d0+dz
-      zmax=mz*c+dz
+      zmax=nz*c+dz
+      xlen=xmax-xmin
+      ylen=ymax-ymin
+      zlen=zmax-zmin
+
+      do i=1,n
+       if(x(i).gt.xmax) x(i)=x(i)-xlen
+       if(x(i).lt.xmin) x(i)=x(i)+xlen
+       if(y(i).gt.ymax) y(i)=y(i)-ylen
+       if(y(i).lt.ymin) y(i)=y(i)+ylen
+       if(z(i).gt.zmax) z(i)=z(i)-zlen
+       if(z(i).lt.zmin) z(i)=z(i)+zlen
+      enddo
 
 c --- Cut out MD box 
-      call cutbox
-      if(idis.eq.1) write(6,*) 'cutbox has been finished.'
+c      call cutbox
+c     if(idis.eq.1) write(6,*) 'cutbox has been finished.'
 
 c --- Check
 c      write(6,*) 'xmin,xmax:',xmin,xmax
