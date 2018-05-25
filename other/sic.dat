@@ -1,0 +1,41 @@
+# SiC parameter, Ec=6.34eV
+# Job selector
+14
+# Lattice, nx
+3
+# Lattice, ny
+3
+# Lattice, nz
+2
+# Number of H
+0
+# Number of atom type
+2
+# MD box, mx
+1
+# MD box, my
+1
+# MD box, mz
+1
+# Dumy 10
+0
+# a=4.359A(3C), a=3.0730A(4H)
+3.0730
+# Cut-off distance
+5.0
+# c=10.1287A(4H)
+10.1287
+# Dumy 4
+0.0
+# Dumy 5
+0.0
+# Dumy 6
+0.0
+# Dumy 7
+0.0
+# Dumy 8
+0.0
+# Dumy 9
+0.0
+# Dumy 10
+0.0
