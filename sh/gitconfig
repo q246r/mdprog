@@ -1,0 +1,10 @@
+[user]
+	name = Kenji Nishimura
+	email = kenji.q246r@gmail.com
+[color]
+	ui = true
+[alias]
+	st = status
+	cm = commit
+	co = checkout
+	br = branch
