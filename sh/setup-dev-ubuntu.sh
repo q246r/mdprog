@@ -1,5 +1,6 @@
 #!/bin/sh
 
 # Install development environment in Ubuntu
+# $ sudo -s
 
-sudo apt -y install gcc gfortran openmpi-bin libopenmpi-dev
+apt -y install gcc gfortran openmpi-bin libopenmpi-dev
