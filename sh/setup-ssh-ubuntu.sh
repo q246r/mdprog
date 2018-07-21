@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Install ssh in Ubuntu
+# $ sudo -s
 
-sudo apt -y install ssh
-sudo service ssh start
-sudo systemctl enable ssh
+apt -y install ssh
+service ssh start
+systemctl enable ssh
