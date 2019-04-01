@@ -46,11 +46,9 @@ group		H type 2
 # NEV ensemble
 #fix		1 all nve
 # NVT ensemble
-#fix		1 all nvt temp ${Tset} ${Tset} 0.1
+#fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
 # NPT ensemble
-fix		1 all npt temp ${Tset} ${Tset} 0.1 iso ${Pset} ${Pset} 1
-# If dt = 0.1 fs
-#fix		1 all npt temp ${Tset} ${Tset} 0.01 iso ${Pset} ${Pset} 0.1
+fix		1 all npt temp ${Tset} ${Tset} $(100.0*dt) iso ${Pset} ${Pset} $(1000.0*dt)
 
 # Stress tensor
 compute         st all pressure thermo_temp
