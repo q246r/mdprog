@@ -4,6 +4,7 @@
 *.dat
 *.atsk
 *.d
+*.swp
 run.*
 dump.*
 test/
