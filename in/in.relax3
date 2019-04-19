@@ -13,9 +13,6 @@ variable	N1 equal ${Ntot}/1
 # Stress calc interval
 variable	N2 equal ${Ntot}/1
 #variable	N2 equal 10
-# MSD of hydrogen interval
-variable	N4 equal ${Ntot}/1
-#variable	N4 equal 10
 # Thermo Info interval
 variable	N3 equal ${Ntot}/1
 #variable	N3 equal 1000

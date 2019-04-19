@@ -31,7 +31,7 @@ read_data	pdh.lmp
 #reset_timestep	0
 
 # Setup potential
-# Pd-Ag-H
+# Pd-H
 pair_style      eam/alloy
 pair_coeff      * * ../potentials/PdAgH_MorsePd3Ag.eam.alloy Pd H
 
