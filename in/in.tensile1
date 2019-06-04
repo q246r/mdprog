@@ -6,7 +6,7 @@ atom_style	atomic
 
 # Time steps
 # Total time steps
-variable	Ntot equal 10000
+variable	Ntot equal 1000000
 # Dump file interval
 variable	N1 equal ${Ntot}/1
 #variable	N1 equal 10
@@ -26,7 +26,7 @@ variable	Pset equal 0.0
 # For example, 5 GPa
 #variable	Pset equal 50000.0
 # Strain rate (1/ps)
-variable	srate equal 0.01
+variable	srate equal 0.0001
 
 #read_data	pdh.lmp
 read_restart	restart.data
@@ -79,4 +79,4 @@ thermo_style	custom step temp press vol pe
 dump		2 all atom ${N1} dump.*.atom
 
 run		${Ntot}
-write_restart	restart.data
+#write_restart	restart.data
