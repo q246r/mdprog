@@ -21,6 +21,7 @@ variable nrun equal 3*${nthermo}          # length of equilibrated run
 variable temp equal 2000.0                # temperature of initial sample
 variable timestep equal 0.001             # timestep
 variable mass1 equal 28.06                # mass
+variable mass2 equal 12.01                # mass
 variable adiabatic equal 0                # adiabatic (1) or isothermal (2)
 variable tdamp equal 0.01                 # time constant for thermostat
 variable seed equal 123457                # seed for thermostat
@@ -30,11 +31,13 @@ variable a equal 5.431
 
 boundary	p p p
 
-lattice         diamond $a
-region		box prism 0 3.0 0 3.0 0 3.0 0.0 0.0 0.0
-create_box	1 box
-create_atoms	1 box
+#lattice         diamond $a
+#region		box prism 0 3.0 0 3.0 0 3.0 0.0 0.0 0.0
+#create_box	1 box
+#create_atoms	1 box
+read_data	3c-sic.lmp
+change_box	all triclinic
 mass 1 ${mass1}
+mass 2 ${mass2}
 velocity	all create ${temp} 87287
-
 

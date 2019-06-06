@@ -4,8 +4,10 @@
 reset_timestep 0
 
 # Choose potential
-pair_style	sw
-pair_coeff * * Si.sw Si
+pair_style	tersoff
+pair_coeff * * ../potentials/SiC_Erhart-Albe.tersoff Si C
+#mass            1       28.06
+#mass            2       12.01
 
 # Setup neighbor style
 neighbor 1.0 nsq

@@ -21,7 +21,7 @@ if "${dir} == 6" then &
 clear
 box tilt large
 read_restart restart.equil
-include potential.mod
+include in.potential2
 
 # Negative deformation
 
@@ -45,7 +45,7 @@ if "${dir} == 6" then &
 # Run MD
 
 run ${nequil}
-include potential.mod
+include in.potential2
 run ${nrun}
 
 # Obtain new stress tensor
@@ -71,7 +71,7 @@ variable C6neg equal ${d6}
 clear
 box tilt large
 read_restart restart.equil
-include potential.mod
+include in.potential2
 
 # Positive deformation
 
@@ -95,7 +95,7 @@ if "${dir} == 6" then &
 # Run MD
 
 run ${nequil}
-include potential.mod
+include in.potential2
 run ${nrun}
 
 # Obtain new stress tensor
