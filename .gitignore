@@ -8,7 +8,7 @@
 run.*
 dump.*
 test/
-restart.data
+restart.*
 res0
 data.file
 log.lammps
