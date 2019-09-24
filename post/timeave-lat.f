@@ -19,7 +19,6 @@ c      write(6,100) com
       enddo
 99    continue
 100   format(a80)
-      n=n-1
       write(6,*) 'n =',n
 
       do i=1,n
