@@ -2,11 +2,11 @@
       implicit doubleprecision (a-h,o-z)
       integer,dimension(:),allocatable :: m
       doubleprecision,dimension(:),allocatable :: 
-     & temp,press,vol,pot
+     & a,b,c,d,vol
       character (len=80) :: com
 
       nx=100000
-      allocate(m(nx),temp(nx),press(nx),vol(nx),pot(nx))
+      allocate(m(nx),a(nx),b(nx),c(nx),d(nx),vol(nx))
 
 c --- Read data
       open(10,file='thermo.d',status='old')
@@ -14,14 +14,17 @@ c --- Read data
 c      write(6,100) com
       n=0
       do i=1,nx
-       read(10,*,end=99) m(i),temp(i),press(i),vol(i),pot(i)
-c       write(6,*) m(i),temp(i),press(i),vol(i),pot(i)
+       read(10,*,end=99) m(i),a(i),b(i),c(i),d(i)
        n=n+1
       enddo
 99    continue
 100   format(a80)
       n=n-1
       write(6,*) 'n =',n
+
+      do i=1,n
+       vol(i)=c(i)
+      enddo
 
       ist=1
       ien=n
@@ -34,8 +37,8 @@ c       write(6,*) m(i),temp(i),press(i),vol(i),pot(i)
       write(6,*) 'nd =',nd
       vave=sum/nd
       write(6,*) 'vave (A^3) =',vave 
-      a=vave**(1.0d0/3.0d0)/10.0d0
-      write(6,*) 'a (A) =',a
+      a0=vave**(1.0d0/3.0d0)/10.0d0
+      write(6,*) 'a0 (A) =',a0
  
       ist=n*0.8+1
       ien=n
@@ -48,7 +51,7 @@ c       write(6,*) m(i),temp(i),press(i),vol(i),pot(i)
       write(6,*) 'nd =',nd
       vave=sum/nd
       write(6,*) 'vave (A^3) =',vave 
-      a=vave**(1.0d0/3.0d0)/10.0d0
-      write(6,*) 'a (A) =',a
+      a0=vave**(1.0d0/3.0d0)/10.0d0
+      write(6,*) 'a0 (A) =',a0
  
       end
