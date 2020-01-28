@@ -13,6 +13,6 @@ filename=$version".tar.gz"
 wget --no-check-certificate https://www.open-mpi.org/software/ompi/v4.0/downloads/$filename
 tar -zxvf $filename
 cd $version
-./configure --prefix=/usr/local/openmpi-4.0.2 CC=gcc CXX=g++ F77=gfortran FC=gfortran
+./configure --prefix=/usr/local/$version CC=gcc CXX=g++ F77=gfortran FC=gfortran
 make all
 make install
