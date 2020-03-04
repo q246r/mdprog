@@ -2715,6 +2715,11 @@ c --- dump style = custom type x y z
 
       if(idis.eq.1) write(6,*) 'readdump has been finished.'
 
+c --- Write LAMMPS data file
+      call writedata
+
+      if(idis.eq.1) write(6,*) 'writedata has been finished.'
+
       end
 
 c --- dump style = atom
