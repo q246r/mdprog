@@ -12,5 +12,5 @@ chmod 777 /data
 
 mount -t nfs $nfs_server:/data /data
 
-cp /etc/fstab /etc/fstab.back
+cp /etc/fstab /etc/fstab.backup
 echo "$nfs_server:/data /data nfs defaults 0 0" >> /etc/fstab
