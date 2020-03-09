@@ -8,7 +8,7 @@ systemctl start rpcbind
 systemctl enable rpcbind
 
 mkdir /data
-chmod 777 data
+chmod 777 /data
 
 mount -t nfs $nfs_server:/data /data
 
