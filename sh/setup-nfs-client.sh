@@ -3,6 +3,7 @@
 nfs_server="150.29.122.90"
 
 yum install rpcbind nfs-utils
+# apt install rpcbind nfs-common
 
 systemctl start rpcbind
 systemctl enable rpcbind
