@@ -1,0 +1,48 @@
+&CONTROL
+  calculation = 'relax'
+  prefix = 'tic'
+  restart_mode = 'from_scratch'
+  tstress = .true.
+  tprnfor = .true.
+  pseudo_dir = '../pseudo/'
+  outdir = 'out_tic'
+  etot_conv_thr = 1.d-5
+  forc_conv_thr = 1.d-4
+  disk_io = 'low'
+/
+ 
+&SYSTEM
+  nat= 8
+  ntyp= 2
+  ibrav= 0
+  ecutwfc= 50.0
+  ecutrho= 600.0
+/
+ 
+&ELECTRONS
+/
+
+&ions
+/
+
+ATOMIC_SPECIES
+Ti  47.867  Ti.pbe-spn-rrkjus_psl.1.0.0.UPF
+C   12.011  C.pbe-n-rrkjus_psl.1.0.0.UPF
+ 
+CELL_PARAMETERS {angstrom}
+      target2        0.00000000        0.00000000
+      0.00000000        target1        0.00000000
+      0.00000000        0.00000000         target1
+
+ATOMIC_POSITIONS {crystal}
+Ti        0.00000000        0.00000000        0.00000000
+Ti        0.00000000        0.50000000        0.50000000
+Ti        0.50000000        0.00000000        0.50000000
+Ti        0.50000000        0.50000000        0.00000000
+C         0.50000000        0.00000000        0.00000000
+C         0.50000000        0.50000000        0.50000000
+C         0.00000000        0.00000000        0.50000000
+C         0.00000000        0.50000000        0.00000000
+
+K_POINTS {automatic}
+6 6 6  0 0 0
