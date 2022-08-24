@@ -2,11 +2,11 @@
       implicit doubleprecision (a-h,o-z)
       integer,dimension(:),allocatable :: m
       doubleprecision,dimension(:),allocatable :: 
-     & a,b,c,d,vol
+     & a,b,c,d,e,f,vol
       character (len=80) :: com
 
       nx=100000
-      allocate(m(nx),a(nx),b(nx),c(nx),d(nx),vol(nx))
+      allocate(m(nx),a(nx),b(nx),c(nx),d(nx),e(nx),f(nx),vol(nx))
 
 c --- Read data
       open(10,file='thermo.d',status='old')
@@ -14,7 +14,7 @@ c --- Read data
 c      write(6,100) com
       n=0
       do i=1,nx
-       read(10,*,end=99) m(i),a(i),b(i),c(i),d(i)
+       read(10,*,end=99) m(i),a(i),b(i),c(i),d(i),e(i),f(i)
        n=n+1
       enddo
 99    continue
