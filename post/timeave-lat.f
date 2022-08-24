@@ -36,8 +36,8 @@ c      write(6,100) com
       write(6,*) 'nd =',nd
       vave=sum/nd
       write(6,*) 'vave (A^3) =',vave 
-      a0=vave**(1.0d0/3.0d0)/10.0d0
-      write(6,*) 'a0 (A) =',a0
+      alat=vave**(1.0d0/3.0d0)
+      write(6,*) 'alat (A) =',alat
  
       ist=n*0.8+1
       ien=n
@@ -50,7 +50,7 @@ c      write(6,100) com
       write(6,*) 'nd =',nd
       vave=sum/nd
       write(6,*) 'vave (A^3) =',vave 
-      a0=vave**(1.0d0/3.0d0)/10.0d0
-      write(6,*) 'a0 (A) =',a0
+      alat=vave**(1.0d0/3.0d0)
+      write(6,*) 'alat (A) =',alat
  
       end
