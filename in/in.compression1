@@ -49,9 +49,17 @@ fix             2 all temp/rescale 1 ${Tset} ${Tset} 1.0 1.0
 # NPT ensemble
 #fix		1 all npt temp ${Tset} ${Tset} $(100.0*dt) iso ${Pset} ${Pset} $(1000.0*dt)
 # Walls
-variable	z1 equal vdisplace(0,0)
-variable	z2 equal 74.088
-fix		bottom all wall/reflect zlo v_z1 zhi v_z2 units box
+# velocity unit = Angstroms/picosecond = 100 m/s
+variable	velz equal 1.0
+variable	ts equal step
+variable	delta equal dt
+variable	z1 equal zlo
+variable	z2 equal zhi
+variable	z1w equal "v_z1 + v_velz * v_ts * v_delta"
+variable	z2w equal "v_z2 - v_velz * v_ts * v_delta"
+#print "z2w = ${z2w}"
+#print "z1w = ${z1w}"
+fix		3 all wall/reflect zlo v_z1 zhi v_z2 units box
 
 # Stress tensor
 compute         st all pressure thermo_temp
@@ -59,7 +67,7 @@ compute         st all pressure thermo_temp
 fix             myst all ave/time 1 ${N2} ${N2} c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] file stress.d
 
 thermo		${N3}
-thermo_style	custom step temp press vol pe ke etotal
+thermo_style	custom step temp press vol pe ke etotal v_z1w v_z2w
 
 dump		2 all atom ${N1} dump.*.atom
 
