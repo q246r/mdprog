@@ -6,15 +6,15 @@ atom_style	atomic
 
 # Time steps
 # Total time steps
-variable	Ntot equal 100
+variable	Ntot equal 20000
 # Dump file interval
-variable	N1 equal ${Ntot}/1
+variable	N1 equal ${Ntot}/10
 #variable	N1 equal 10
 # Stress calc interval
-variable	N2 equal ${Ntot}/1
+variable	N2 equal ${Ntot}/100
 #variable	N2 equal 10
 # Thermo Info interval
-variable	N3 equal ${Ntot}/1
+variable	N3 equal ${Ntot}/100
 #variable	N3 equal 1000
 # Prescribed temperature (K)
 variable	Tset equal 300.0
@@ -59,7 +59,7 @@ variable	z1w equal "v_z1 + v_velz * v_ts * v_delta"
 variable	z2w equal "v_z2 - v_velz * v_ts * v_delta"
 #print "z2w = ${z2w}"
 #print "z1w = ${z1w}"
-fix		3 all wall/reflect zlo v_z1 zhi v_z2 units box
+fix		3 all wall/reflect zlo v_z1w zhi v_z2w units box
 
 # Stress tensor
 compute         st all pressure thermo_temp
