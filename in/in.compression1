@@ -6,9 +6,9 @@ atom_style	atomic
 
 # Time steps
 # Total time steps
-variable	Ntot equal 2000
+variable	Ntot equal 1000
 # Dump file interval
-variable	N1 equal ${Ntot}/10
+variable	N1 equal ${Ntot}/1
 #variable	N1 equal 10
 # Stress calc interval
 variable	N2 equal ${Ntot}/100
@@ -67,7 +67,7 @@ compute         st all pressure thermo_temp
 # Time average
 #fix             myst all ave/time 1 ${N2} ${N2} c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] v_zlen file stress.d
 # No time average
-fix             myst all ave/time 1 1 ${N2} c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] v_zlen file stress.d
+fix             myst all ave/time 1 10 ${N2} c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] v_zlen file stress.d
 # Per-atom stress tensor
 #compute		pst all stress/atom thermo_temp
 
@@ -78,4 +78,4 @@ dump		2 all atom ${N1} dump.*.atom
 #dump		2 all custom ${N1} dump.*.stress x y z c_pst[3]
 
 run		${Ntot}
-#write_restart	restart.data
+write_restart	restart.data
