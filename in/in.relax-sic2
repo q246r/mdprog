@@ -1,0 +1,70 @@
+# NVE, NVT and NPT ensamble
+
+units		metal
+boundary	p p p
+atom_style	atomic
+
+# Time steps
+# Total time steps
+variable	Ntot equal 10000
+# Dump file interval
+variable	N1 equal ${Ntot}/10
+#variable	N1 equal 10
+# Stress calc interval
+variable	N2 equal ${Ntot}/1
+#variable	N2 equal 10
+# Thermo Info interval
+variable	N3 equal ${Ntot}/10
+#variable	N3 equal 1000
+# Prescribed temperature (K)
+variable	Tset equal 300.0
+# Prescribed pressure (bars)
+variable	Pset equal 1.0
+# For example, 5 GPa
+#variable	Pset equal 50000.0
+
+read_data	sic.lmp
+#read_restart	restart.data
+#reset_timestep	0
+
+# Setup potential
+# SiC
+pair_style      vashishta
+#pair_style      vashishta/table 100000 0.2
+pair_coeff      * * ../../potentials/SiC.vashishta Si C Si C
+
+neighbor        1.0 bin
+neigh_modify    every 1 delay 5 check yes
+ 
+timestep	1.0e-3
+velocity	all create ${Tset} 376847 loop geom
+
+# Bottom
+region		1 block 0.0 INF 0.0 INF 0.0 8.0
+group		bottom region 1
+velocity	bottom zero linear
+# Move
+region		2 block 0.0 INF 0.0 INF 8.0 INF
+group		move region 2
+
+# Choose ensemble
+# NEV ensemble
+#fix		1 all nve
+# NVT ensemble
+#fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
+fix		1 move nvt temp ${Tset} ${Tset} $(100.0*dt)
+# NPT ensemble
+#fix		1 all npt temp ${Tset} ${Tset} $(100.0*dt) iso ${Pset} ${Pset} $(1000.0*dt)
+
+# Stress tensor
+compute         st all pressure thermo_temp
+# Time average
+fix             myst all ave/time 1 ${N2} ${N2} c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] file stress.d
+
+thermo		${N3}
+thermo_style	custom step temp press vol pe
+
+dump		2 all atom ${N1} dump.*.atom
+
+run		${Ntot}
+write_restart	restart.data
