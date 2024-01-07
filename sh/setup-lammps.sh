@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
+cd ~
 git clone -b stable https://github.com/lammps/lammps.git mylammps
 
-cd mylammps/src
+cd ~/mylammps/src
 make yes-manybody
-make -j 4 mpi
+make yes-ml-snap
+make -j 8 mpi
 
 # cp lmp_mpi ~/bin/lmp_mpi_new
