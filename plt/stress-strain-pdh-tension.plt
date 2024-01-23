@@ -8,6 +8,7 @@ set output "fig.emf"
 set xlabel "{/=20 Tensile strain}" offset 0.0,0.4
 set ylabel "{/=20 Tensile stress (GPa)}" offset 0.0,0.0
 set xrange [0:0.2]
+set format x "%3.2f"
 set yrange [0:8]
 set xtics 0.05
 set ytics 2
