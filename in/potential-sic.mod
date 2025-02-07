@@ -9,7 +9,7 @@
 #pair_style      vashishta
 #pair_coeff      * * SiC.vashishta Si C
 pair_style      tersoff
-pair_coeff      * * SiC_Erhart-Albe.tersoff Si C
+pair_coeff      * * ../../potentials/SiC_Erhart-Albe.tersoff Si C
 
 # InP
 #include InP_JCPA2020.snap
