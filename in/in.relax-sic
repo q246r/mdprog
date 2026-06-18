@@ -19,7 +19,7 @@ variable	N3 equal ${Ntot}/1
 # Prescribed temperature (K)
 variable	Tset equal 300.0
 # Prescribed pressure (bars)
-variable	Pset equal 0.0
+variable	Pset equal 1.0
 # For example, 5 GPa
 #variable	Pset equal 50000.0
 
@@ -29,8 +29,8 @@ read_data	sic.lmp
 
 # Setup potential
 # SiC
-#pair_style      vashishta
-pair_style      vashishta/table 100000 0.2
+pair_style      vashishta
+#pair_style      vashishta/table 100000 0.2
 pair_coeff      * * ../potentials/SiC.vashishta Si C
 
 neighbor        1.0 bin
