@@ -33,6 +33,14 @@ c      do i=1,n
 c         write(6,*) e(i),s1(i),s2(i),s3(i),s4(i),s5(i),s6(i)
 c      enddo
 
+c --- maximun
+      smx=abs(s3(1))
+      do i=1,n
+         s3a=abs(s3(i))
+         if(smx.lt.s3a) smx=s3a
+      enddo
+      write(6,*) 'Max. of s3:',smx
+
 c --- mises stress
       allocate(sm(n))
       do i=1,n
@@ -44,7 +52,7 @@ c --- mises stress
 c --- maximun
       smx=sm(1)
       do i=1,n
-#      do i=1,n,300
+c      do i=1,n,300
          if(smx.lt.sm(i)) smx=sm(i)
       enddo
       write(6,*) 'Max. of mises:',smx
