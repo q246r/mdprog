@@ -13,10 +13,8 @@ atom_style      atomic
 variable        Ntot equal 10000
 # Dump file interval
 variable        N1 equal ${Ntot}/1
-# Stress calc interval
-variable        N2 equal ${Ntot}/100
 # Thermo Info interval
-variable        N3 equal ${Ntot}/100
+variable        N2 equal ${Ntot}/100
 # Prescribed temperature (K)
 variable        Tset equal 300.0
 
@@ -62,7 +60,7 @@ fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
 thermo          100
 
 # Output dump file
-dump            1 all custom 10000 equilibration.trj id type xs ys zs vx vy vz
+dump            1 all custom 10000 equilibration.trj id type x y z vx vy vz
 
 run		10000
 
@@ -108,16 +106,9 @@ variable        p8 equal "v_zlen"
 
 fix             20 all print ${N2} "${p1} ${p2} ${p3} ${p4} ${p5} ${p6} ${p7} ${p8}" file stress.txt screen no
 
-# Compute energy and stress per atom
-compute         myEng all pe/atom
-compute         myPress all stress/atom thermo_temp
+dump            1 all atom ${N1} dump.*
 
-# Output dump file
-dump            1 all custom ${N1} dump.* id type xs ys zs c_myEng c_myPress[*]
-
-thermo		${N3}
+thermo		${N2}
 
 run		${Ntot}
 write_restart   restart.data
-#restart         ${N1} restart.*
-
