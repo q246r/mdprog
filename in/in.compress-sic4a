@@ -1,0 +1,123 @@
+# MD simulation to compress SiC nanoparticle with virtual walls.
+#  1. minimize
+#  2. relaxation
+#  3. compress
+
+units           metal
+#boundary        f f f
+boundary        s s s
+atom_style      atomic
+
+# Time steps
+# Total time steps
+variable        Ntot equal 10000
+# Dump file interval
+variable        N1 equal ${Ntot}/1
+# Stress calc interval
+variable        N2 equal ${Ntot}/100
+# Thermo Info interval
+variable        N3 equal ${Ntot}/100
+# Prescribed temperature (K)
+variable        Tset equal 300.0
+
+read_data	100.lmp	
+
+# -----
+#  potential
+# -----
+
+# SiC
+pair_style      vashishta
+pair_coeff      * * ../../potentials/SiC.vashishta Si C
+
+neighbor        1.0 bin
+neigh_modify    every 1 delay 5 check yes one 4000   # A single atom can have 4,000 neighboring atoms.
+
+thermo          100
+thermo_style    custom step atoms temp pe ke etotal press
+thermo_modify   lost ignore
+
+# -----
+#  energy minimization
+# -----
+
+reset_timestep  0
+
+min_style       cg
+minimize        1.0e-10 1.0e-10 10000 100000
+
+write_data      relaxed.data
+
+# -----
+#  thermal quilibration
+# -----
+
+reset_timestep	0
+
+velocity        all create ${Tset} 376847 loop geom mom yes rot yes
+
+# ensemble
+fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
+
+thermo          100
+
+# Output dump file
+dump            1 all custom 10000 equilibration.trj id type xs ys zs vx vy vz
+
+run		10000
+
+unfix		1
+undump		1
+
+# -----
+#  compression test
+# -----
+
+reset_timestep	0
+
+# ensemble
+fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
+
+# compression settings
+# velocity unit = Angstroms/picosecond = 100 m/s
+variable        velz equal 0.0
+variable        ztop0 equal "zlo"
+variable        zbot0 equal "zhi"
+variable        ztop equal "v_ztop0 - v_velz * step * dt"
+variable        zbot equal "v_zbot0 + v_velz * step * dt"
+variable        zlen equal "v_ztop - v_zbot"
+
+# wall/reflect
+fix             3 all wall/reflect zlo v_zbot zhi v_ztop units box
+
+# Fix the center of gravity
+fix             4 all momentum 100 linear 1 1 1
+
+# Output stress info to file
+# for units metal, pressure is in [bars] = 100 [kPa] = 1/10000 [GPa]
+# p2 to p7 are in GPa.
+# p1 is in ps, p8 is in angstrom.
+variable        p1 equal "step * dt"
+variable        p2 equal "-pxx/10000"
+variable        p3 equal "-pyy/10000"
+variable        p4 equal "-pzz/10000"
+variable        p5 equal "-pxy/10000"
+variable        p6 equal "-pyz/10000"
+variable        p7 equal "-pxz/10000"
+variable        p8 equal "v_zlen"
+
+fix             20 all print ${N2} "${p1} ${p2} ${p3} ${p4} ${p5} ${p6} ${p7} ${p8}" file stress.txt screen no
+
+# Compute energy and stress per atom
+compute         myEng all pe/atom
+compute         myPress all stress/atom thermo_temp
+
+# Output dump file
+dump            1 all custom ${N1} dump.* id type xs ys zs c_myEng c_myPress[*]
+
+thermo		${N3}
+
+run		${Ntot}
+write_restart   restart.data
+#restart         ${N1} restart.*
+
