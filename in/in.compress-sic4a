@@ -55,26 +55,20 @@ reset_timestep	0
 velocity        all create ${Tset} 376847 loop geom mom yes rot yes
 
 # ensemble
-fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
-
-thermo          100
+fix		EQ all nvt temp ${Tset} ${Tset} $(100.0*dt)
 
 # Output dump file
-dump            1 all custom 10000 equilibration.trj id type x y z vx vy vz
+dump            D1 all custom 10000 equilibration.trj id type x y z vx vy vz
 
 run		10000
 
-unfix		1
-undump		1
+undump		D1
 
 # -----
 #  compression test
 # -----
 
 reset_timestep	0
-
-# ensemble
-fix		1 all nvt temp ${Tset} ${Tset} $(100.0*dt)
 
 # compression settings
 # velocity unit = Angstroms/picosecond = 100 m/s
@@ -86,10 +80,11 @@ variable        zbot equal "v_zbot0 + v_velz * step * dt"
 variable        zlen equal "v_ztop - v_zbot"
 
 # wall/reflect
-fix             3 all wall/reflect zlo v_zbot zhi v_ztop units box
+fix             TOP all wall/reflect zhi v_ztop units box
+fix             BOT all wall/reflect zlo v_zbot units box
 
 # Fix the center of gravity
-fix             4 all momentum 100 linear 1 1 1
+fix             MOM all momentum 100 linear 1 1 1
 
 # Output stress info to file
 # for units metal, pressure is in [bars] = 100 [kPa] = 1/10000 [GPa]
@@ -104,9 +99,9 @@ variable        p6 equal "-pyz/10000"
 variable        p7 equal "-pxz/10000"
 variable        p8 equal "v_zlen"
 
-fix             20 all print ${N2} "${p1} ${p2} ${p3} ${p4} ${p5} ${p6} ${p7} ${p8}" file stress.txt screen no
+fix             PRT all print ${N2} "${p1} ${p2} ${p3} ${p4} ${p5} ${p6} ${p7} ${p8}" file stress.txt screen no
 
-dump            1 all atom ${N1} dump.*
+dump            D2 all atom ${N1} dump.*
 
 thermo		${N2}
 
